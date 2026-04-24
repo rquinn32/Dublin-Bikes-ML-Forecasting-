@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Pricing | Dublin Bikes{% endblock %}
+
+{% block content %}
+<section class="pricing-page">
+    <div class="pricing-hero">
+        <p class="pricing-eyebrow">Simple plans for every rider</p>
+        <h1>Choose the way you ride Dublin</h1>
+        <p class="pricing-subtext">
+            Flexible pricing for commuters, students, tourists, and regular city riders.
+        </p>
+    </div>
+
+        <section class="pricing-grid">
+            <article class="pricing-card">
+                <div class="pricing-card-top">
+                    <span class="pricing-tag">Flexible</span>
+                    <h2>Pay as You Go</h2>
+                    <p>Best for occasional rides each month.</p>
+                </div>
+                <div class="price">€12<span>/month</span></div>
+                <ul>
+                    <li>Includes a set number of monthly ride tickets</li>
+                    <li>Top up when needed</li>
+                    <li>Good for casual use</li>
+                </ul>
+                <button type="button">Select Plan</button>
+            </article>
+
+            <article class="pricing-card featured">
+                <div class="pricing-card-top">
+                    <span class="pricing-tag">Most Popular</span>
+                    <h2>Unlimited Monthly</h2>
+                    <p>For regular riders and daily commuting.</p>
+                </div>
+                <div class="price">€25<span>/month</span></div>
+                <ul>
+                    <li>Unlimited monthly access</li>
+                    <li>Ideal for commuting</li>
+                    <li>Priority support and easier renewals</li>
+                </ul>
+                <button type="button">Select Plan</button>
+            </article>
+
+            <article class="pricing-card">
+                <div class="pricing-card-top">
+                    <span class="pricing-tag">Student</span>
+                    <h2>Student Deal</h2>
+                    <p>Discounted access with a valid Student Leap Card.</p>
+                </div>
+                <div class="price">€15<span>/month</span></div>
+                <ul>
+                    <li>Requires valid Student Leap Card</li>
+                    <li>Lower monthly cost</li>
+                    <li>Built for campus and city travel</li>
+                </ul>
+                <button type="button">Select Plan</button>
+            </article>
+
+            <article class="pricing-card">
+                <div class="pricing-card-top">
+                    <span class="pricing-tag">Tourist</span>
+                    <h2>Visitor Pass</h2>
+                    <p>Short-term access for exploring the city.</p>
+                </div>
+                <div class="price">€18<span>/3 days</span></div>
+                <ul>
+                    <li>3-day pass option</li>
+                    <li>1-week pass also available</li>
+                    <li>Perfect for sightseeing</li>
+                </ul>
+                <button type="button">Select Plan</button>
+            </article>
+
+            <article class="pricing-card">
+                <div class="pricing-card-top">
+                    <span class="pricing-tag">Local</span>
+                    <h2>Annual Pass</h2>
+                    <p>For Dublin locals who ride all year round.</p>
+                </div>
+                <div class="price">€180<span>/year</span></div>
+                <ul>
+                    <li>Best long-term value</li>
+                    <li>Made for frequent city riders</li>
+                    <li>One plan for the full year</li>
+                </ul>
+                <button type="button">Select Plan</button>
+            </article>
+        </section>
+
+    <div id="paymentPopup" class="popup-overlay">
+        <div class="popup-box">
+            <h3>Payment Info</h3>
+            <p>You can pay at the station when selecting your Dublin Bikes plan.</p>
+
+            <div class="popup-actions">
+                <button type="button" onclick="closePopup()">Got it</button>
+                <button type="button" class="popup-close-secondary" onclick="closePopup()">Close</button>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function closePopup() {
+        const popup = document.getElementById("paymentPopup");
+        if (popup) {
+            popup.style.display = "none";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll(".pricing-card button");
+        const popup = document.getElementById("paymentPopup");
+
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                if (popup) {
+                    popup.style.display = "flex";
+                }
+            });
+        });
+
+        if (popup) {
+            popup.addEventListener("click", (event) => {
+                if (event.target === popup) {
+                    closePopup();
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

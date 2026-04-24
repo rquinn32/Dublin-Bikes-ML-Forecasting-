@@ -1,0 +1,432 @@
+{% extends "base.html" %}
+
+{% block title %}Dublin Bikes{% endblock %}
+
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.js?version=4.8.0"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/prediction.css') }}">   
+{% endblock %}
+
+{% block content %}
+
+<div class="hero">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="DublinBikes logo">
+        <h1>DublinBikes</h1>
+    </div>
+
+    <h2>Your next ride starts here.</h2>
+
+    <p class="subtext">
+        Available from 5am to 12.30am daily<br>
+        Bikes can be returned 24/7.
+    </p>
+
+    <div class="scroll" onclick="scrollToMap()">
+        <p>Scroll to explore</p>
+        <span>↓</span>
+    </div>
+    </div>
+
+<div class="weather-card">
+    <p>{{ temperature }}°C</p>
+    <small>Wind: {{ wind_speed }} km/h • Rain: {{ rain }}%</small>
+</div>
+
+<div class="map-section" id="map-section">
+    <div id="layout">
+        <div id="map-wrapper">
+            <div class="search-bar">
+                <input type="text" id="station-search" placeholder="Search for a station...">
+                <button id="search-button">Search</button>
+                <button id="clear-button">Clear</button>
+            </div>
+
+            <div id="map"></div>
+
+            <div id="legend">
+                <div class="legend-item">
+                    <img src="{{ url_for('static', filename='images/green_wheel.png') }}" alt="green icon">
+                    <span>5+ bikes available</span>
+                </div>
+
+                <div class="legend-item">
+                    <img src="{{ url_for('static', filename='images/orange_wheel.png') }}" alt="orange icon">
+                    <span>1–4 bikes available</span>
+                </div>
+
+                <div class="legend-item">
+                    <img src="{{ url_for('static', filename='images/red_wheel.png') }}" alt="red icon">
+                    <span>No bikes available</span>
+                </div>
+            </div>
+
+            <div id="sidebar" class="hidden">
+                <button id="close-sidebar" onclick="closeSidebar()">×</button>
+                <div id="sidebar-content">
+                    <h2>Station Details</h2>
+                    <p>Click "More info" on a station marker to see the graph here.</p>
+                </div>
+            </div>
+        </div>
+
+        <aside id="side-panel">
+    <section id="routing-panel">
+        <h2>Route Planner</h2>
+
+        <button id="use-location-button" type="button">Use My Location</button>
+        <button id="start-route-button" type="button">Start Route</button>
+        <button id="clear-route-button" type="button">Clear Route</button>
+
+        <p id="route-status">Click “Start Route”, then click two places on the map.</p>
+        <div id="route-info"></div>
+    </section>
+
+        {% if current_user.is_authenticated %}
+    <section id="favourites-panel" class="hidden-panel">
+        <h2>Favourite Stations</h2>
+        <ul id="favourites-list">
+            <li class="empty-favourites">No favourites yet.</li>
+        </ul>
+    </section>
+    {% endif %}
+  
+</aside>
+    </div>
+</div>
+
+
+<section id="ml-wide-panel">
+    <div class="ml-top-row">
+        <div class="ml-copy">
+            <h2>Will bikes be there when you leave?</h2>
+            <p class="ml-subtext"> Find out here! </p>
+        </div>
+
+        <div class="prediction-search-wrap">
+            <div class="prediction-search">
+                <input type="text" id="prediction-search" placeholder="Search for a station...">
+                <div id="prediction-results" class="search-results"></div>
+            </div>
+
+            <div id="selected-station">No station selected</div>
+        </div>
+    </div>
+
+    <div class="ml-actions-row">
+        <div class="quick-prediction-options">
+            <button type="button" class="quick-predict-btn" data-minutes="10">10 min</button>
+            <button type="button" class="quick-predict-btn" data-minutes="30">30 min</button>
+            <button type="button" class="quick-predict-btn" data-minutes="60">60 min</button>
+        </div>
+
+        <button type="button" id="toggle-advanced-prediction" class="text-link-button">
+            Further in advance?
+        </button>
+    </div>
+
+    <div id="advanced-prediction-fields" class="hidden">
+        <form id="predict-form">
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" required max="" name="date">
+            </div>
+
+            <div class="form-group">
+                <label for="time">Time</label>
+                <input type="time" id="time" required step="60" name="time">
+            </div>
+
+            <button type="submit">Check availability</button>
+        </form>
+    </div>
+
+    <div id="result-card" class="result-card hidden">
+        <h3>Prediction Result</h3>
+        <p><strong>Station:</strong> <span id="res-station"></span></p>
+        <p><strong>Date:</strong> <span id="res-date"></span></p>
+        <p><strong>Time:</strong> <span id="res-time"></span></p>
+        <p><strong>Status:</strong> <span id="res-status"></span></p>
+    </div>
+</section>
+
+<div class="discover">
+    <h2>Discover Dublin</h2>
+
+    <div class="card-row">
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/dublin1.png') }}" alt="Explore the City">
+            <span class="card-text">Explore the City</span>
+            <div class="card-content" style="display: none;">
+                <h2>Explore the City</h2>
+                <p>
+                Discover Dublin in the most flexible and fun way with DublinBikes. 
+                    Glide through the lively streets, from the historic charm of Trinity College Dublin to the vibrant atmosphere of Temple Bar, all at your own pace. 
+                    Whether you're commuting, sightseeing, or just enjoying a spontaneous ride along the River Liffey, DublinBikes makes it easy to experience the city up close. 
+                    Skip the traffic, embrace the fresh air, and uncover hidden gems around every corner—your Dublin adventure starts with a single pedal.
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            
+            <img src="{{ url_for('static', filename='images/dublin2.png') }}" alt="Temple Bar District">
+            <span class="card-text">Temple Bar District</span>
+            <div class="card-content" style="display: none;">
+                <h2>Temple Bar District</h2>
+                <p>
+                    Step into the heart of Dublin’s cultural scene in the iconic Temple Bar district. Known for its cobbled streets, colourful buildings, and lively atmosphere, this area is a must-visit for music, art, and nightlife lovers. Park your DublinBike nearby and wander through buzzing pubs, street performances, and unique galleries, or soak up the energy with a quick coffee or bite to eat. Whether day or night, Temple Bar offers an unforgettable slice of Dublin’s spirit just a short ride away.
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/dublin3.png') }}" alt="Easy Access Stations">
+            <span class="card-text">Easy Access Stations</span>
+            <div class="card-content" style="display: none;">
+                <h2>Easy Access Stations</h2>
+                <p>
+                    Getting around Dublin has never been simpler, thanks to DublinBikes’ network of conveniently located stations across the city. From transport hubs like Heuston Station and Connolly Station to popular spots such as St Stephen's Green, you’re never far from your next ride. With easy pick-up and drop-off points, you can plan your journey with total flexibility—perfect for commuting, exploring, or making quick stops along the way. Just grab a bike and go wherever the city takes you.
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/dublin4.png') }}" alt="Scenic Routes">
+            <span class="card-text">Scenic Routes</span>
+            <div class="card-content" style="display: none;">
+                <h2>Scenic Routes</h2>
+                <p>
+                    Experience Dublin at its most beautiful by exploring its scenic cycling routes with DublinBikes. Cruise along the River Liffey for stunning waterfront views, or take a relaxing ride through the lush greenery of Phoenix Park, one of Europe’s largest city parks. For a coastal escape, follow the path out to Clontarf Promenade and enjoy fresh sea air and panoramic views of Dublin Bay. Whether you’re after nature, cityscapes, or a bit of both, these routes offer the perfect backdrop for a memorable ride.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="popup" class="popup">
+        <div class="popup-content large">
+            <span id="closeButton">&times;</span>
+            <div id="popupText"></div>
+        </div>
+    </div>
+</div>
+{% if not current_user.is_authenticated %}
+<div class="login-prompt-section" id="login-section">
+    <div class="login-card">
+
+        <div id="login-box" style="{% if auth == 'login' or not auth %}display:block;{% else %}display:none;{% endif %}">
+            <h2>Log in</h2>
+
+            <form method="POST" action="{{ url_for('auth.login') }}">
+                <div class="login-row">
+                    <label for="login-email">Email</label>
+                    <input type="email" name="email" id="login-email" required>
+                </div>
+
+                <div class="login-row">
+                    <label for="login-password">Password</label>
+                    <input type="password" name="password" id="login-password" required>
+                </div>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p class="register-link">
+                Don't have an account?
+                <a href="#" onclick="showRegisterForm(); return false;">Register here</a>
+            </p>
+
+            <p class="register-link">
+                <a href="#" onclick="showForgotForm(); return false;">Forgot your password?</a>
+            </p>
+        </div>
+
+        <div id="register-box" style="{% if auth == 'register' %}display:block;{% else %}display:none;{% endif %}">
+            <h2>Register</h2>
+
+            <form method="POST" action="{{ url_for('auth.register') }}">
+                <div class="login-row">
+                    <label for="register-email">Email</label>
+                    <input type="email" name="email" id="register-email" required>
+                </div>
+
+                <div class="login-row">
+                    <label for="register-password">Password</label>
+                    <input type="password" name="password" id="register-password" required>
+                </div>
+
+                <button type="submit">Register</button>
+            </form>
+
+            <p class="register-link">
+                Already have an account?
+                <a href="#" onclick="showLoginForm(); return false;">Login here</a>
+            </p>
+        </div>
+
+        <div id="forgot-box" style="{% if auth == 'forgot' %}display:block;{% else %}display:none;{% endif %}">
+            <h2>Forgot Password</h2>
+
+            <form method="POST" action="{{ url_for('auth.forgot_password') }}">
+                <div class="login-row">
+                    <label for="forgot-email">Email</label>
+                    <input type="email" name="email" id="forgot-email" required>
+                </div>
+
+                <button type="submit">Send Reset Link</button>
+            </form>
+
+            <p class="register-link">
+                Remembered your password?
+                <a href="#" onclick="showLoginForm(); return false;">Login here</a>
+            </p>
+        </div>
+
+        {% if token %}
+        <div id="reset-box" style="{% if auth == 'reset' %}display:block;{% else %}display:none;{% endif %}">
+            <h2>Reset Password</h2>
+
+            <form method="POST" action="{{ url_for('auth.reset_password', token=token) }}">
+                <div class="login-row">
+                    <label for="reset-password">New password</label>
+                    <input type="password" name="password" id="reset-password" required>
+                </div>
+
+                <button type="submit">Reset Password</button>
+            </form>
+
+            <p class="register-link">
+                Back to login?
+                <a href="#" onclick="showLoginForm(); return false;">Login here</a>
+            </p>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endif %}
+<div class="review-page">
+
+    {% if current_user.is_authenticated %}
+        <form action="{{ url_for('main.submit_review') }}" method="POST" class="review-form">
+            <label for="rating">Rating</label>
+            <div class="rating">
+                <input type="radio" name="rating" value="5" id="star5" required><label for="star5">★</label>
+                <input type="radio" name="rating" value="4" id="star4"><label for="star4">★</label>
+                <input type="radio" name="rating" value="3" id="star3"><label for="star3">★</label>
+                <input type="radio" name="rating" value="2" id="star2"><label for="star2">★</label>
+                <input type="radio" name="rating" value="1" id="star1"><label for="star1">★</label>
+            </div>
+
+            <label for="comments">Comments</label>
+            <textarea id="comments" name="comments" rows="4"></textarea>
+
+            <button type="submit" class="submit-btn">Submit Review</button>
+        </form>
+    {% endif %}
+
+    <div class="reviews-list">
+        {% if reviews %}
+            {% for r in reviews %}
+                <div class="review-item">
+                    <strong>{{ r.user_email }}</strong> - {{ r.rating }} ★
+                    {% if r.comments %}
+                        <p>{{ r.comments }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No reviews yet.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        window.IS_AUTHENTICATED = {{ 'true' if current_user.is_authenticated else 'false' }};
+    </script>
+
+        <script src="{{ url_for('static', filename='js/map_main.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/markers.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/favourites.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/routing.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/prediction.js') }}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ apikey }}&callback=initMap&libraries=geometry"
+        async
+        defer>
+    </script>
+
+    <script>
+    function showRegisterForm() {
+        document.getElementById("login-box").style.display = "none";
+        document.getElementById("register-box").style.display = "block";
+        document.getElementById("forgot-box").style.display = "none";
+
+        const resetBox = document.getElementById("reset-box");
+        if (resetBox) resetBox.style.display = "none";
+    }
+
+    function showLoginForm() {
+        document.getElementById("login-box").style.display = "block";
+        document.getElementById("register-box").style.display = "none";
+        document.getElementById("forgot-box").style.display = "none";
+
+        const resetBox = document.getElementById("reset-box");
+        if (resetBox) resetBox.style.display = "none";
+    }
+
+    function showForgotForm() {
+        document.getElementById("login-box").style.display = "none";
+        document.getElementById("register-box").style.display = "none";
+        document.getElementById("forgot-box").style.display = "block";
+
+        const resetBox = document.getElementById("reset-box");
+        if (resetBox) resetBox.style.display = "none";
+    }
+
+    function scrollToMap() {
+        const section = document.getElementById("map-section");
+        const yOffset = -60;
+        const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+        window.scrollTo({
+            top: y,
+            behavior: "smooth"
+        });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const authMode = params.get("auth");
+
+    if (authMode === "login") {
+        showLoginForm();
+    } else if (authMode === "register") {
+        showRegisterForm();
+    } else if (authMode === "forgot") {
+        showForgotForm();
+    } else if (authMode === "reset") {
+        document.getElementById("login-box").style.display = "none";
+        document.getElementById("register-box").style.display = "none";
+        document.getElementById("forgot-box").style.display = "none";
+
+        const resetBox = document.getElementById("reset-box");
+        if (resetBox) resetBox.style.display = "block";
+    }
+
+    if (authMode) {
+        const loginSection = document.getElementById("login-section");
+        if (loginSection) {
+            loginSection.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+</script>
+
+{% endblock %}
+

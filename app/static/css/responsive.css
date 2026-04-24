@@ -1,0 +1,433 @@
+/* Tablet */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 14px 20px;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .nav-center {
+        width: 100%;
+        order: 3;
+    }
+
+    .nav-center a {
+        margin-left: 0;
+    }
+
+    .nav-right {
+        margin-left: 0;
+    }
+
+    .hero {
+        min-height: 80vh;
+        height: auto;
+        padding: 60px 20px;
+    }
+
+    .weather-card {
+        position: static;
+        width: fit-content;
+        max-width: calc(100% - 40px);
+        margin: 0 auto 20px;
+    }
+
+    #layout {
+        flex-direction: column;
+    }
+
+    #side-panel {
+        width: 100%;
+        height: auto;
+        border-left: none;
+        border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    #ml-wide-panel {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 20px;
+    }
+
+    .ml-top-row {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .prediction-search-wrap,
+    #predict-form input {
+        max-width: 100%;
+    }
+
+    .pricing-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 16px;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .nav-left,
+    .nav-center,
+    .nav-right {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-center {
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+
+    .nav-center a,
+    .nav-left a,
+    .nav-right a {
+        margin: 0 !important;
+    }
+
+    .nav-left h2 {
+        margin: 0;
+        text-align: center;
+    }
+
+    .nav-right {
+        margin-left: 0 !important;
+    }
+
+    .hero {
+        height: auto;
+        min-height: auto;
+        padding: 40px 16px 20px;
+    }
+
+    .logo {
+        width: 100%;
+        margin-bottom: 12px;
+        gap: 8px;
+        flex-direction: column;
+    }
+
+    .logo img {
+        height: 64px;
+        max-width: 100%;
+    }
+
+    .logo h1 {
+        font-size: 28px;
+        line-height: 1.1;
+        text-align: center;
+    }
+
+    .hero h2 {
+        font-size: 24px;
+        line-height: 1.2;
+        margin: 8px 0 14px;
+    }
+
+    .subtext {
+        font-size: 14px;
+    }
+}
+
+
+/* Mobile */
+@media (max-width: 768px) {
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar {
+        order: 2;
+    }
+
+    .content {
+        order: 1;
+    }
+
+    .navbar {
+        position: static;
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 14px 16px;
+    }
+
+    .nav-left,
+    .nav-right,
+    .nav-center {
+        width: 100%;
+    }
+
+    .nav-center {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px 18px;
+    }
+
+    .nav-center a,
+    .nav-right a {
+        margin-left: 0;
+    }
+
+    .nav-right {
+        display: flex;
+        justify-content: center;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 48px 16px;
+    }
+
+    .subtext {
+        font-size: 14px;
+    }
+
+    .logo img {
+        height: 52px;
+    }
+
+    .logo h1 {
+        font-size: 24px;
+    }
+
+    .hero h2 {
+        font-size: 20px;
+    }
+
+    .scroll {
+        margin-top: 24px;
+    }
+
+    .weather-card {
+        width: auto;
+        max-width: calc(100% - 32px);
+        padding: 12px 14px;
+        text-align: center;
+    }
+
+    .map-section {
+        padding: 24px 0;
+    }
+
+    #map {
+        height: 420px;
+    }
+
+    .search-bar {
+        position: static;
+        width: calc(100% - 32px);
+        margin: 0 auto 16px;
+        flex-direction: column;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .search-bar input,
+    #search-button,
+    #clear-button {
+        width: 100%;
+    }
+
+    #legend {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    #sidebar {
+        top: 12px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-width: none;
+        height: auto;
+        max-height: 70%;
+    }
+
+    #side-panel {
+        padding: 16px;
+    }
+
+    #routing-panel button,
+    #longterm-prediction-panel button,
+    #predict-form button {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #ml-wide-panel {
+        margin: 24px 16px 60px;
+        padding: 18px 16px;
+        border-radius: 18px;
+    }
+
+    .ml-copy h2 {
+        font-size: 22px;
+    }
+
+    .ml-subtext {
+        font-size: 14px;
+    }
+
+    .ml-actions-row,
+    .quick-prediction-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .quick-predict-btn,
+    .text-link-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .discover {
+        padding: 40px 16px;
+    }
+
+    .discover h2 {
+        font-size: 28px;
+    }
+
+    .card-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 340px;
+        height: 300px;
+    }
+
+    .login-prompt-section,
+    .review-page,
+    .pricing-page {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .login-card,
+    .review-form,
+    .popup-box {
+        padding: 20px 16px;
+    }
+
+    .review-form input[type="text"],
+    .review-form textarea,
+    .login-row input {
+        font-size: 16px;
+    }
+
+    .pricing-page {
+        padding-top: 48px;
+        padding-bottom: 60px;
+    }
+
+    .pricing-hero h1 {
+        font-size: 34px;
+    }
+
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pricing-card {
+        min-height: auto;
+    }
+
+    .popup-actions {
+        flex-direction: column;
+    }
+
+    .popup-actions button {
+        width: 100%;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 20px;
+        padding: 28px 16px;
+    }
+
+    .footer div {
+        max-width: none;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 12px;
+    }
+
+    .hero h2 {
+        font-size: 24px;
+    }
+
+    .logo h1 {
+        font-size: 30px;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    #map {
+        height: 340px;
+    }
+
+    @media (max-width: 900px) {
+    
+        .weather-card {
+        position: static !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+
+        width: calc(100% - 32px);
+        max-width: 420px;
+        margin: 12px auto 10px;
+        box-sizing: border-box;
+        z-index: auto;
+    }
+
+    .map-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-bar {
+        position: static;
+        width: 100%;
+    }
+    }
+
+    .pricing-hero h1,
+    .popup-box h3,
+    .login-card h2 {
+        font-size: 28px;
+    }
+
+    .price {
+        font-size: 30px;
+    }
+}

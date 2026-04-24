@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Dublin Bikes Dashboard{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/pricing.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    
+        {% block head %}{% endblock %}
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-left">
+        <h2>Dublin Bikes</h2>
+    </div>
+
+    <div class="nav-center">
+        <a href="{{ url_for('main.index') }}">Home</a>
+        <a href="{{ url_for('main.pricing') }}">Pricing</a>
+        <a href="{{ url_for('main.info') }}">How It Works</a>
+    </div>
+
+    <div class="nav-right">
+      {% if current_user.is_authenticated %}
+          <a href="{{ url_for('auth.logout') }}">Logout</a>
+      {% else %}
+          <a href="#login-section">Login</a>
+      {% endif %}
+    </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <main>
+        <aside class="sidebar">
+            {% block sidebar %}{% endblock %}
+        </aside>
+
+        <section class="content">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-left">
+            <h3>DublinBikes</h3>
+            <p>Dublin's premier bike-sharing service. Explore the city on two wheels.</p>
+        </div>
+
+        <div class="footer-center">
+            <p>info@dublinbikes.ie</p>
+            <p>+353 1 555 1234</p>
+            <p>Dublin City Centre, Ireland</p>
+        </div>
+
+        <div class="footer-right">
+            <p><strong>Hours</strong></p>
+            <p>Available 24/7, 365 days a year</p>
+            <p>Customer support: Mon–Fri, 9am–6pm</p>
+    </div>
+    </footer>
+
+        {% block scripts %}
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleBtn = document.getElementById("toggle-advanced-prediction");
+
+            if (toggleBtn) {
+                toggleBtn.addEventListener("click", function () {
+                const section = document.getElementById("advanced-prediction-fields");
+                section.classList.toggle("hidden");
+
+                this.textContent = section.classList.contains("hidden")
+                    ? "Further in advance?"
+                    : "Hide advanced options";
+            });
+            }
+        });
+        </script>
+        {% endblock %}
+
+</body>
+</html>

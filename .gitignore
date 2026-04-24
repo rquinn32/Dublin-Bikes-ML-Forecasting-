@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+.DS_Store
+final_merged_data.csv
+logs/*
+!logs/.gitkeep

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}How To | Dublin Bikes{% endblock %}
+
+{% block content %}
+<section class="pricing-page">
+    <div class="pricing-hero">
+        <p class="pricing-eyebrow">Getting started with Dublin Bikes</p>
+        <h1>How to use Dublin Bikes</h1>
+        <p class="pricing-subtext">
+            Everything you need to know to find a station, plan your trip, rent a bike, return it, and share your experience.
+        </p>
+    </div>
+
+    <section class="pricing-grid">
+        <article class="pricing-card">
+            <div class="pricing-card-top">
+                <span class="pricing-tag">Step 1</span>
+                <h2>Find your station</h2>
+                <p>Locate the best station for your journey.</p>
+            </div>
+            <ul>
+                <li>Use the interactive map on the homepage</li>
+                <li>Search for a station by name</li>
+                <li>Check how many bikes are available</li>
+                <li>Plan ahead with predicted bike availability</li>
+            </ul>
+        </article>
+
+        <article class="pricing-card featured">
+            <div class="pricing-card-top">
+                <span class="pricing-tag">Step 2</span>
+                <h2>Plan your journey</h2>
+                <p>Choose the best route for you.</p>
+            </div>
+            <ul>
+                <li>Use the Route Planner on the map page</li>
+                <li>Click “Start Route” to begin</li>
+                <li>Select your starting point and destination</li>
+                <li>Follow the directions to the nearest station, then continue to your destination</li>
+            </ul>
+        </article>
+
+        <article class="pricing-card">
+            <div class="pricing-card-top">
+                <span class="pricing-tag">Step 3</span>
+                <h2>Rent your bike</h2>
+                <p>Unlock a bike and start your ride.</p>
+            </div>
+            <ul>
+                <li>Go to your chosen station</li>
+                <li>Select an available bike</li>
+                <li>Pay at the station when renting your bike</li>
+                <li>See the <a href="{{ url_for('main.pricing') }}">Pricing</a> page for full details</li>
+                <li>Start your ride and enjoy the city</li>
+            </ul>
+        </article>
+
+        <article class="pricing-card">
+            <div class="pricing-card-top">
+                <span class="pricing-tag">Step 4</span>
+                <h2>Return your bike</h2>
+                <p>Dock your bike safely at any available station.</p>
+            </div>
+            <ul>
+                <li>Find a nearby return station on the map</li>
+                <li>Check for available docking spaces</li>
+                <li>Push the bike securely into the dock</li>
+                <li>Make sure the return is confirmed</li>
+            </ul>
+        </article>
+
+        <article class="pricing-card">
+            <div class="pricing-card-top">
+                <span class="pricing-tag">Step 5</span>
+                <h2>Leave a review</h2>
+                <p>Tell us about your experience using Dublin Bikes.</p>
+            </div>
+            <ul>
+                <li>Scroll to the review section on the homepage</li>
+                <li>Choose your rating</li>
+                <li>Add comments about your trip</li>
+                <li>Submit your review to help other users</li>
+            </ul>
+        </article>
+    </section>
+</section>
+{% endblock %}

@@ -1,0 +1,306 @@
+
+.pricing-page {
+    padding: 72px 40px 90px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.pricing-hero {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.pricing-eyebrow {
+    margin: 0 0 10px;
+    color: #8a5b55;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.pricing-hero h1 {
+    margin: 0 0 12px;
+    font-size: 46px;
+    line-height: 1.05;
+    color: #1f2328;
+    letter-spacing: -0.03em;
+}
+
+.pricing-subtext {
+    margin: 0 auto;
+    max-width: 640px;
+    color: #69707a;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+}
+
+.pricing-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 420px;
+
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(20, 20, 20, 0.08);
+    border-radius: 18px;
+    padding: 22px 20px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(163, 50, 43, 0.18);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.pricing-card.featured {
+    border-color: rgba(163, 50, 43, 0.22);
+    background: rgba(255, 250, 249, 0.84);
+}
+
+.pricing-card-top h2 {
+    margin: 10px 0 8px;
+    font-size: 22px;
+    color: #222;
+    letter-spacing: -0.02em;
+}
+
+.pricing-card-top p {
+    margin: 0 0 16px;
+    color: #6c737d;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.pricing-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(163, 50, 43, 0.07);
+    border: 1px solid rgba(163, 50, 43, 0.12);
+    color: #8a4e47;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.price {
+    margin: 4px 0 18px;
+    font-size: 36px;
+    font-weight: 700;
+    color: #1f2328;
+    letter-spacing: -0.03em;
+}
+
+.price span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #737b84;
+    margin-left: 4px;
+}
+
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 22px;
+}
+
+.pricing-card ul li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 10px;
+    color: #4f5660;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.pricing-card ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #a3322b;
+}
+
+.pricing-card button,
+.pricing-login-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(163, 50, 43, 0.16);
+    background: rgba(163, 50, 43, 0.07);
+    color: #7b4039;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.pricing-card button:hover,
+.pricing-login-button:hover {
+    background: rgba(163, 50, 43, 0.11);
+    border-color: rgba(163, 50, 43, 0.28);
+    transform: translateY(-1px);
+}
+
+.pricing-login-panel {
+    max-width: 520px;
+    margin: 30px auto 0;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(20, 20, 20, 0.08);
+    border-radius: 18px;
+    padding: 32px 28px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.pricing-login-panel h2 {
+    margin: 0 0 10px;
+    color: #1f2328;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+}
+
+.pricing-login-panel p {
+    margin: 0 0 22px;
+    color: #6d747d;
+    line-height: 1.6;
+}
+
+@media (max-width: 1200px) {
+    .pricing-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 860px) {
+    .pricing-page {
+        padding: 56px 20px 72px;
+    }
+
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pricing-hero h1 {
+        font-size: 36px;
+    }
+}
+
+.pricing-card a {
+    font-weight: 600;
+    text-decoration: none;
+    color: #4f5660;
+}
+
+.pricing-card a:hover {
+    color: #a33222;
+}
+
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(20, 24, 31, 0.32);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+.popup-box {
+    width: 100%;
+    max-width: 460px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(20, 20, 20, 0.08);
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-align: center;
+    animation: popupFadeIn 0.2s ease;
+}
+
+.popup-box h3 {
+    margin: 0 0 10px;
+    color: #1f2328;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+}
+
+.popup-box p {
+    margin: 0 0 20px;
+    color: #69707a;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.popup-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.popup-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(163, 50, 43, 0.16);
+    background: rgba(163, 50, 43, 0.07);
+    color: #7b4039;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.popup-actions button:hover {
+    background: rgba(163, 50, 43, 0.11);
+    border-color: rgba(163, 50, 43, 0.28);
+    transform: translateY(-1px);
+}
+
+.popup-close-secondary {
+    border: 1px solid rgba(20, 20, 20, 0.08) !important;
+    background: rgba(255, 255, 255, 0.72) !important;
+    color: #4f5660 !important;
+}
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
